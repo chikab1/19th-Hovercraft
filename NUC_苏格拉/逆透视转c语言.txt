@@ -1,0 +1,37 @@
+void  image_change()
+{uint8 i=0,j=0,t=0;
+for (i = 0;i<new_size[0];i++)                      
+    for (j = 0;j<new_size[1];j++)
+    {
+       s=H7*(j-new_size[1]/2)+H8 *i+H9; //从变换图像中反向寻找原图像的点，以免出现空洞，和旋转放大原理一样
+        s=1/s;     
+        img_assist_x[i][j]=(H1*(j-new_size[1]/2)*s+H2*i*s+H3*s);
+        img_assist_y[i][j]=(H4*(j-new_size[1]/2)*s+H5*i*s+H6*s);
+      //  X=(H1*(j-new_size[1]/2)*s+H2*i*s+H3*s);
+      //  Y=(H4*(j-new_size[1]/2)*s+H5*i*s+H6*s);
+        t=136-i;    // 137为矫正后图像纵向宽度最大
+                 if (img_assist_y[i][j]>=0.5 && img_assist_x[i][j]>=0.5 && img_assist_y[i][j]<=120 && img_assist_x[i][j]<=188) 
+                
+                  img_chang[t][j]=image[(uint8)round(img_assist_y[i][j])][(uint8)round(img_assist_x[i][j])]; //最邻近插值,也可以用双线性或双立方插值
+         else                  
+                   img_chang[t][j]=0; 
+//         if (Y>=0.5 && X>=0.5 && Y<=120 && X<=188) 
+//                
+//                  img_chang[t][j]=image[(uint8)round(Y)][(uint8)round(X)]; //最邻近插值,也可以用双线性或双立方插值
+//         else                  
+//                   img_chang[t][j]=0;   
+    }
+}
+void  image_change_init()
+{
+uint8 i=0,j=0,t=0;
+for (i = 0;i<new_size[0];i++)                      
+    for (j = 0;j<new_size[1];j++)
+    {
+       s=H7*(j-new_size[1]/2)+H8 *i+H9; //从变换图像中反向寻找原图像的点，以免出现空洞，和旋转放大原理一样
+        s=1/s;     
+        img_assist_x[i][j]=(H1*(j-new_size[1]/2)*s+H2*i*s+H3*s);
+        img_assist_y[i][j]=(H4*(j-new_size[1]/2)*s+H5*i*s+H6*s);
+  
+    }
+}
